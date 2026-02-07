@@ -1,0 +1,33 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # 关键：允许推送镜像
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+#      - run: npm run test
+      - run: npm run build
+      # 登录 GHCR（GITHUB_TOKEN 自动提供，repository_owner 自动提供）
+      - name: Docker Login
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      # 构建并推送（repository_owner 自动提供）
+      - name: Build & Push
+        run: |
+          IMAGE=ghcr.io/trname/nest6d
+          docker build -t $IMAGE:${{ github.sha }} -t $IMAGE:latest .
+          docker push $IMAGE:${{ github.sha }}
+          docker push $IMAGE:latest

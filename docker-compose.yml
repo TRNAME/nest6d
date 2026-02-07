@@ -1,0 +1,35 @@
+services:
+  mysql:                      # 第一个服务名
+    image: mysql:8.0          # 官方 8.0，带 arm64 支持
+    platform: ${PLATFORM:-linux/amd64}     # 默认指定 CPU 架构为 AMD64（x86）
+    restart: unless-stopped   # 容器退出后自动重启策略
+    env_file: .env            # 同样读 .env, 使用railway启动需要略掉
+    ports:                    # 端口映射
+      - "${DB_PORT}:3306"     # 宿主机端口:容器内端口，就等于本地可访问容器内的 MySQL
+    volumes:                  # 数据持久化
+      - mysql_data:/var/lib/mysql # ← 挂载到容器内默认数据目录（不写这行，容器删了数据就没了）
+    healthcheck:              # 健康检查，检测 MySQL 是否真准备好了
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${DB_USER}", "-p${DB_PASS}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5              # 失败 5 次后才标记为 unhealthy
+    command: >                #覆盖镜像默认启动命令，追加参数
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+
+  api:
+#    build: .                  # 从当前目录的 Dockerfile 打包构建镜像，本地使用
+    image: ghcr.io/trname/nest6d:latest   # ← 改成拉下来的镜像
+    restart: unless-stopped
+    env_file: .env            # 同样读 .env, 使用railway启动需要略掉
+    ports:                    # 端口映射
+      - "${APP_PORT}:3000"    #（.env 里定义的）:（main.ts 里 app.listen）
+    depends_on:               # 控制启动顺序
+      mysql:
+        condition: service_healthy  # 等 MySQL 健康检查通过才启动 API
+    volumes:
+      - ./logs:/app/logs           # 挂载本地文件夹./logs到容器/app/logs
+
+volumes: # 声明卷
+  mysql_data: # 落在电脑本地磁盘（Docker 虚拟机里），不写随容器消失
