@@ -10,6 +10,7 @@ jobs:
     permissions:
       contents: read
       packages: write # 关键：允许推送镜像
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4
