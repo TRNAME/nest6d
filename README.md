@@ -13,9 +13,29 @@
 
 --- 
 
+## 6-Day Learning Roadmap
+> 5 hours per day, master NestJS full-stack development in 6 days.
+
+| Day | Morning 2h | Afternoon 2h | Evening 1h          | Outcome |
+|:---:|:---|:---|:--------------------|:---|
+| **D1** | Scaffold + Ping | TypeORM + User Table | Global Validation   | CRUD Users |
+| **D2** | JWT 3 Endpoints | Guards + Decorators | Swagger Docs        | Auth System Complete |
+| **D3** | RBAC + Soft Delete | Global Exception + Logging | Transaction Scripts | Security + Logging |
+| **D4** | Pagination + Search | Multi-env Config | Dockerization       | Container Image |
+| **D5** | CI Scripts | Cloud Server Setup | HTTPS               | Auto Deployment |
+| **D6** | Tests & Docs | Go Live + Domain | Finalize README     | 🎉 Production URL |
+
+### Learning Tips
+- **D1-D2**: Focus on NestJS modular architecture and dependency injection
+- **D3**: RBAC is essential for enterprise projects, must master
+- **D4-D5**: DevOps skills
+- **D6**: Complete documentation
+
+--- 
+
 ## Getting Started
 
-```
+```bash
 # Install
 npm install
 
@@ -81,7 +101,7 @@ NODE_ENV=development
 ## Image Deployment
 
 After pushing code, GitHub Actions automatically builds and pushes to ghcr.io/trname/nest6d. On your server:
-```
+```bash
 docker pull ghcr.io/<your-username>/nest6d:latest   # Replace <your-username> with yours (must be lowercase)
 docker-compose up -d    # Enter docker-compose.yml directory and start, modify yml as needed
 ```
@@ -91,13 +111,13 @@ docker-compose up -d    # Enter docker-compose.yml directory and start, modify y
 ## Common Commands
 
 ### Testing
-```
+```bash
 npm run test
 npm run test:e2e
 ```
 
 ### Local Docker Deployment
-```
+```bash
 docker build -t nest6d .
 docker-compose up -d    # Modify docker-compose.yml as needed
 ```
