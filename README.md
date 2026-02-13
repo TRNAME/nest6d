@@ -13,6 +13,11 @@
 
 --- 
 
+## Tech Stack
+NestJS + TypeScript + TypeORM + MySQL/PostgreSQL + JWT + Docker
+
+--- 
+
 ## 6-Day Learning Roadmap
 > 5 hours per day, master NestJS full-stack development in 6 days.
 
@@ -56,7 +61,7 @@ npm run start:dev
 
 - Auth：JWT + APP_GUARD global guard
 - RBAC：Role-based access control (user/admin)
-- Data：TypeORM + MySQL + soft delete
+- Data：TypeORM + MySQL/PostgreSQL + soft delete
 - Tools：Swagger / Pino logger / global validation / pagination & search
 - Deploy：Docker / GitHub Actions / HTTPS / Railway
 
@@ -83,6 +88,8 @@ src/
 # NestJS App MySQL connection
 DB_HOST=mysql
 DB_PORT=3306
+; DB_HOST=postgres
+; DB_PORT=5432
 DB_USER=root
 DB_PASS=root
 DB_NAME=test
@@ -90,6 +97,11 @@ DB_NAME=test
 # MySQL container config (only used on first startup for initialization)
 MYSQL_ROOT_PASSWORD=root
 MYSQL_DATABASE=root
+
+# (Optional) Dedicated to the PostgreSQL container itself (only effective on the first startup, initializing the database)
+; POSTGRES_USER=root
+; POSTGRES_PASSWORD=root
+; POSTGRES_DB=test
 
 # App
 APP_PORT=3000
@@ -122,12 +134,7 @@ docker build -t nest6d .
 docker-compose up -d    # Modify docker-compose.yml as needed
 ```
 
---- 
-
-## Tech Stack
-NestJS + TypeScript + TypeORM + MySQL + JWT + Docker
-
---- 
+---
 
 ## Contributing
 

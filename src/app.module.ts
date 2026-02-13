@@ -52,7 +52,7 @@ import { ConfigModule } from '@nestjs/config';
     }),
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
-        type: 'mysql',
+        type: 'mysql', // postgres
         host: process.env.DB_HOST!,
         port: parseInt(process.env.DB_PORT!, 10),
         username: process.env.DB_USER!,

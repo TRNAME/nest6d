@@ -13,6 +13,11 @@
 
 --- 
 
+## 技术栈
+NestJS + TypeScript + TypeORM + MySQL/PostgreSQL + JWT + Docker
+
+--- 
+
 ## 6 天学习路线图
 > 每天 5 小时，6 天掌握 NestJS 全栈开发。
 
@@ -57,7 +62,7 @@ npm run start:dev
 
 - 认证：JWT + APP_GUARD 全局守卫
 - 权限：RBAC角色控制（user/admin）
-- 数据：TypeORM + MySQL + 软删
+- 数据：TypeORM + MySQL/PostgreSQL + 软删
 - 工具：Swagger / Pino日志 / 全局验证 / 分页搜索
 - 部署：Docker / GitHub Actions / HTTPS / Railway
 
@@ -84,6 +89,8 @@ src/
 # NestJS 应用MySQL
 DB_HOST=mysql
 DB_PORT=3306
+; DB_HOST=postgres
+; DB_PORT=5432
 DB_USER=root
 DB_PASS=root
 DB_NAME=test
@@ -91,6 +98,11 @@ DB_NAME=test
 # MySQL容器本身 专用（只有第一次启动时生效，初始化数据库）
 MYSQL_ROOT_PASSWORD=root
 MYSQL_DATABASE=root
+
+# 【可选】PostgreSQL容器本身 专用（只有第一次启动时生效，初始化数据库）
+; POSTGRES_USER=root
+; POSTGRES_PASSWORD=root
+; POSTGRES_DB=test
 
 # App
 APP_PORT=3000
@@ -124,12 +136,7 @@ docker build -t nest6d .
 docker-compose up -d    // docker-compose.yml根据备注按需更改
 ```
 
---- 
-
-## 技术栈
-NestJS + TypeScript + TypeORM + MySQL + JWT + Docker
-
---- 
+---
 
 ## 贡献
 

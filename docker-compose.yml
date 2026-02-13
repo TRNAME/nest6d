@@ -18,6 +18,16 @@ services:
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_unicode_ci
 
+#  postgres:
+#    image: postgres:16-alpine
+#    container_name: postgres
+#    restart: unless-stopped
+#    env_file: .env
+#    ports:
+#      - "${DB_PORT}:5432"
+#    volumes:
+#      - pg_data:/var/lib/postgresql/data
+
   api:
 #    build: .                  # 从当前目录的 Dockerfile 打包构建镜像，本地使用
     image: ghcr.io/trname/nest6d:latest   # ← 改成拉下来的镜像
@@ -27,6 +37,7 @@ services:
       - "${APP_PORT}:3000"    #（.env 里定义的）:（main.ts 里 app.listen）
     depends_on:               # 控制启动顺序
       mysql:
+#      postgres:
         condition: service_healthy  # 等 MySQL 健康检查通过才启动 API
     volumes:
       - ./logs:/app/logs           # 挂载本地文件夹./logs到容器/app/logs
